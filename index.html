@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>INVESTIMENTOS EM P&D NO BRASIL: Uma análise exploratória</title>
 </head>
 <body>
-    <h1>INVESTIMENTOS EM P&D NO BRASIL: Uma análise exploratória</h1>
-    
-    <script src="script/index.js"></script>
+  <div>
+    <button id="btnEvolucao">Evolução</button>
+    <button id="btnRanking">Ranking</button>
+    <button id="btnComparacao">Comparação</button>
+    <button id="btnHistograma">Histograma</button>
+    <button id="btnBoxplot">Boxplot</button>
+    <br>
+    <canvas id="bricsChart"></canvas>
+  </div>
+
+  <script src="script/util.js"></script>
+  <script src="script/data.js"></script>    
+  <script src="script/index.js"></script>
 </body>
 </html>
