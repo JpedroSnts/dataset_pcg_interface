@@ -41,7 +41,7 @@ function chartEvolucao(event, withMedia = false) {
             fill: false,
         });
     }
-    
+
     const dados = {
         labels: data.labelsData,
         datasets: datasetList,
@@ -57,10 +57,17 @@ function chartEvolucao(event, withMedia = false) {
                 intersect: false,
             },
             plugins: {
-                title: chartOptions.getTitle("Evolução dos Investimentos em P&D (% do PIB) - BRICS (2003-2020)"),
+                title: chartOptions.getTitle(
+                    "Evolução dos Investimentos em P&D (% do PIB) - BRICS (2003-2020)"
+                ),
                 legend: chartOptions.getLegend(),
             },
-            scales: chartOptions.getScales("Ano", "Investimento (% do PIB)", 0.5, 2.5),
+            scales: chartOptions.getScales(
+                "Ano",
+                "Investimento (% do PIB)",
+                0.5,
+                2.5
+            ),
         },
     };
 
@@ -80,19 +87,20 @@ function chartRanking(event) {
         const resultado = [];
 
         anos.forEach((_, index) => {
-            const valoresAno = paises.map(pais => ({
+            const valoresAno = paises.map((pais) => ({
                 pais,
-                valor: data.countries[pais].data[index]
+                valor: data.countries[pais].data[index],
             }));
 
             valoresAno.sort((a, b) => b.valor - a.valor);
-            const posicao = valoresAno.findIndex(item => item.pais === paisNome) + 1;
+            const posicao =
+                valoresAno.findIndex((item) => item.pais === paisNome) + 1;
             resultado.push(posicao);
         });
 
         return resultado;
     }
-    
+
     const dados = {
         labels: data.labelsData,
         datasets: Object.entries(data.countries).map(([key, value]) => {
@@ -117,10 +125,19 @@ function chartRanking(event) {
                 intersect: false,
             },
             plugins: {
-                title: chartOptions.getTitle("Ranking em Investimentos em P&D entre os BRICS (2003–2020)"),
+                title: chartOptions.getTitle(
+                    "Ranking em Investimentos em P&D entre os BRICS (2003-2020)"
+                ),
                 legend: chartOptions.getLegend(),
             },
-            scales: chartOptions.getScales("Ano", "Posição no Ranking", 0, 6, 1, true),
+            scales: chartOptions.getScales(
+                "Ano",
+                "Posição no Ranking",
+                0,
+                6,
+                1,
+                true
+            ),
         },
     };
 
@@ -137,6 +154,52 @@ function chartHistograma(event) {
 
 function chartBoxplot(event) {
     chartDestroy();
+
+    const boxplotData = {
+        labels: Object.values(data.countries).map((c) => c.label),
+        datasets: [
+            {
+                label: "Investimento em P&D",
+                data: Object.values(data.countries).map((c) => c.data),
+                backgroundColor: Object.values(data.countries).map(
+                    (c) => c.color + "80"
+                ),
+                borderColor: Object.values(data.countries).map((c) => c.color),
+                borderWidth: 2,
+                outlierColor: Object.values(data.countries).map((c) => c.color),
+                padding: 10,
+                itemRadius: 3,
+                medianColor: Object.values(data.countries).map((c) => c.color),
+                lowerBackgroundColor: Object.values(data.countries).map(
+                    (c) => c.color + "20"
+                ),
+            },
+        ],
+    };
+
+    const config = {
+        type: "boxplot",
+        data: boxplotData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                title: chartOptions.getTitle(
+                    "Distribuição dos Investimentos em P&D por País (2003-2020)"
+                ),
+                legend: chartOptions.getLegend("none"),
+            },
+            scales: chartOptions.getScales(
+                "País",
+                "Investimento em P&D (% do PIB)",
+                0.5,
+                2.5,
+                0.5
+            ),
+        },
+    };
+
+    globalChart = new Chart(ctx, config);
 }
 
 function chartSelect(event, chartFunction) {
@@ -152,18 +215,24 @@ function chartSelect(event, chartFunction) {
 }
 
 function load() {
-    document.getElementById("btnEvolucao").addEventListener("click", (event) => {
-        chartSelect(event, chartEvolucao);
-    });
+    document
+        .getElementById("btnEvolucao")
+        .addEventListener("click", (event) => {
+            chartSelect(event, chartEvolucao);
+        });
     document.getElementById("btnRanking").addEventListener("click", (event) => {
         chartSelect(event, chartRanking);
     });
-    document.getElementById("btnComparacao").addEventListener("click", (event) => {
-        chartSelect(event, chartComparacao);
-    });
-    document.getElementById("btnHistograma").addEventListener("click", (event) => {
-        chartSelect(event, chartHistograma);
-    });
+    document
+        .getElementById("btnComparacao")
+        .addEventListener("click", (event) => {
+            chartSelect(event, chartComparacao);
+        });
+    document
+        .getElementById("btnHistograma")
+        .addEventListener("click", (event) => {
+            chartSelect(event, chartHistograma);
+        });
     document.getElementById("btnBoxplot").addEventListener("click", (event) => {
         chartSelect(event, chartBoxplot);
     });
