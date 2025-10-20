@@ -139,12 +139,36 @@ function chartBoxplot(event) {
     chartDestroy();
 }
 
+function chartSelect(event, chartFunction) {
+    chartDestroy();
+    event.currentTarget.classList.add("active");
+    const buttons = document.getElementsByClassName("cardChart");
+    for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i] !== event.currentTarget) {
+            buttons[i].classList.remove("active");
+        }
+    }
+    chartFunction(event);
+}
+
 function load() {
-    document.getElementById("btnEvolucao").addEventListener("click", chartEvolucao);
-    document.getElementById("btnRanking").addEventListener("click", chartRanking);
-    document.getElementById("btnComparacao").addEventListener("click", chartComparacao);
-    document.getElementById("btnHistograma").addEventListener("click", chartHistograma);
-    document.getElementById("btnBoxplot").addEventListener("click", chartBoxplot);
+    document.getElementById("btnEvolucao").addEventListener("click", (event) => {
+        chartSelect(event, chartEvolucao);
+    });
+    document.getElementById("btnRanking").addEventListener("click", (event) => {
+        chartSelect(event, chartRanking);
+    });
+    document.getElementById("btnComparacao").addEventListener("click", (event) => {
+        chartSelect(event, chartComparacao);
+    });
+    document.getElementById("btnHistograma").addEventListener("click", (event) => {
+        chartSelect(event, chartHistograma);
+    });
+    document.getElementById("btnBoxplot").addEventListener("click", (event) => {
+        chartSelect(event, chartBoxplot);
+    });
+
+    document.getElementById("btnEvolucao").click();
 }
 
 window.onload = load;

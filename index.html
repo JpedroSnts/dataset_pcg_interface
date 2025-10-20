@@ -1,25 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/index.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>INVESTIMENTOS EM P&D NO BRASIL: Uma análise exploratória</title>
-</head>
-<body>
-  <div>
-    <button id="btnEvolucao">Evolução</button>
-    <button id="btnRanking">Ranking</button>
-    <button id="btnComparacao">Comparação</button>
-    <button id="btnHistograma">Histograma</button>
-    <button id="btnBoxplot">Boxplot</button>
-    <br>
-    <canvas id="bricsChart"></canvas>
-  </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style/index.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Chenla&family=Mako&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <title>INVESTIMENTOS EM P&D NO BRASIL: Uma análise exploratória</title>
+    </head>
+    <body>
+        <header class="fontTitle">
+            <a href="#"><img id="logoPCG" src="img/logo.svg" alt="Logo do projeto" /></a>
+            <nav>
+                <ul>
+                    <li><a class="active" href="#">Analítico</a></li>
+                    <li><a href="info.html">Informações</a></li>
+                </ul>
+            </nav>
+            <ul id="ulAcessibilidade">
+                <li><button class="btnInvisible"><img src="img/talkback.svg" alt="Leitor de página"/></button></li>
+                <li><button class="btnInvisible"><img src="img/zoom.svg" alt="Zoom de página"/></button></li>
+                <li><button class="btnInvisible"><img src="img/translate.svg" alt="Tradutor de página"/></button></li>
+                <li><button class="btnInvisible"><img src="img/auto_contraste.svg" alt="Auto Contraste"/></button></li>
+            </ul>
+        </header>
+        <main>
+            <div class="navCharts">
+                <button class="cardChart" id="btnEvolucao">
+                    <img src="img/evolucao.svg" class="cardChartIcon" alt="ícone do botão de Evolução" />
+                    <div class="cardChartTitle">Evolução</div>
+                    <div class="cardChartDescricao">Evolução com o tempo</div>
+                </button>
+                <button class="cardChart" id="btnRanking">
+                    <img src="img/ranking.svg" class="cardChartIcon" alt="ícone do botão de Ranking" />
+                    <div class="cardChartTitle">Ranking</div>
+                    <div class="cardChartDescricao">Ordenar países</div>
+                </button>
+                <button class="cardChart" id="btnComparacao">
+                    <img src="img/comparacao.svg" class="cardChartIcon" alt="ícone do botão de Comparação" />
+                    <div class="cardChartTitle">Comparação</div>
+                    <div class="cardChartDescricao">Comparar países</div>
+                </button>
+                <button class="cardChart" id="btnHistograma">
+                    <img src="img/histograma.svg" class="cardChartIcon" alt="ícone do botão de Histograma" />
+                    <div class="cardChartTitle">Histograma</div>
+                    <div class="cardChartDescricao">Analisar frequencias</div>
+                </button>
+                <button class="cardChart" id="btnBoxplot">
+                    <img src="img/boxplot.svg" class="cardChartIcon" alt="ícone do botão de Boxplot" />
+                    <div class="cardChartTitle">Boxplot</div>
+                    <div class="cardChartDescricao">Entender distribuição</div>
+                </button>
+            </div>
+            <br />
+            <canvas id="bricsChart"></canvas>
+        </main>
 
-  <script src="script/util.js"></script>
-  <script src="script/data.js"></script>    
-  <script src="script/index.js"></script>
-</body>
+        <script src="script/util.js"></script>
+        <script src="script/data.js"></script>
+        <script src="script/index.js"></script>
+    </body>
 </html>
