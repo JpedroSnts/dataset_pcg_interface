@@ -8,7 +8,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Chenla&family=Mako&display=swap" rel="stylesheet">
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script type="text/javascript" src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
 
         <title>INVESTIMENTOS EM P&D NO BRASIL: Uma análise exploratória</title>
     </head>
@@ -17,20 +17,45 @@
             <a href="#"><img id="logoPCG" src="img/logo.svg" alt="Logo do projeto" /></a>
             <nav>
                 <ul>
-                    <li><a class="active" href="#">Analítico</a></li>
-                    <li><a href="info.html">Informações</a></li>
+                    <li><a class="active" href="#">ANALÍTICO</a></li>
+                    <li><a href="info.html">INFORMAÇÃO</a></li>
+                    <li><a href="info.html">INFORMAÇÃO</a></li>
                 </ul>
             </nav>
             <ul id="ulAcessibilidade">
-                <li><button class="btnInvisible"><img src="img/talkback.svg" alt="Leitor de página"/></button></li>
-                <li><button class="btnInvisible"><img src="img/zoom.svg" alt="Zoom de página"/></button></li>
-                <li><button class="btnInvisible"><img src="img/translate.svg" alt="Tradutor de página"/></button></li>
-                <li><button class="btnInvisible"><img src="img/auto_contraste.svg" alt="Auto Contraste"/></button></li>
+                <li><button class="btnInvisible" title="Leitor de tela (Alt+T)" aria-label="Ativar leitor de tela"><img src="img/talkback.svg" alt="Leitor de página"/></button></li>
+                <li><button class="btnInvisible" title="Zoom (Alt+Z)" aria-label="Ajustar zoom"><img src="img/zoom.svg" alt="Zoom de página"/></button></li>
+                <li><button class="btnInvisible" title="Tradutor" aria-label="Traduzir página"><img src="img/translate.svg" alt="Tradutor de página"/></button></li>
+                <li><button class="btnInvisible" title="Alto Contraste (Alt+C)" aria-label="Ativar alto contraste"><img src="img/auto_contraste.svg" alt="Auto Contraste"/></button></li>
             </ul>
         </header>
         <main>
+            <!-- Título e controles -->
+            <div class="chartControls">
+                <h2 class="chartTitle">Escolha o tipo de visualização para analisar os dados:</h2>
+                <div class="controlButtons">
+                    <button class="btnControl" id="btnFilter" title="Filtrar dados">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="4" y1="6" x2="20" y2="6"/>
+                            <line x1="8" y1="12" x2="16" y2="12"/>
+                            <line x1="11" y1="18" x2="13" y2="18"/>
+                        </svg>
+                        Filter
+                    </button>
+                    <button class="btnControl" id="btnExport" title="Exportar dados">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cards de navegação -->
             <div class="navCharts">
-                <button class="cardChart" id="btnEvolucao">
+                <button class="cardChart active" id="btnEvolucao">
                     <img src="img/evolucao.svg" class="cardChartIcon" alt="ícone do botão de Evolução" />
                     <div class="cardChartTitle">Evolução</div>
                     <div class="cardChartDescricao">Evolução com o tempo</div>
@@ -56,12 +81,54 @@
                     <div class="cardChartDescricao">Entender distribuição</div>
                 </button>
             </div>
-            <br />
+            
+            <!-- Gráfico -->
             <canvas id="bricsChart"></canvas>
         </main>
 
+        <!-- Modal de Filtros -->
+        <div id="filterModal" class="modal">
+            <div class="modalContent">
+                <h2>Filtrar Dados</h2>
+                
+                <div class="filterGroup">
+                    <label>Países:</label>
+                    <label class="checkboxLabel">
+                        <input type="checkbox" value="Brasil" checked> Brasil
+                    </label>
+                    <label class="checkboxLabel">
+                        <input type="checkbox" value="China" checked> China
+                    </label>
+                    <label class="checkboxLabel">
+                        <input type="checkbox" value="India" checked> Índia
+                    </label>
+                    <label class="checkboxLabel">
+                        <input type="checkbox" value="Russia" checked> Rússia
+                    </label>
+                    <label class="checkboxLabel">
+                        <input type="checkbox" value="AfricaDoSul" checked> África do Sul
+                    </label>
+                </div>
+                
+                <div class="filterGroup">
+                    <label>Período:</label>
+                    <div class="yearInputs">
+                        <input type="number" id="yearStart" placeholder="Ano inicial" min="2003" max="2020" value="2003">
+                        <input type="number" id="yearEnd" placeholder="Ano final" min="2003" max="2020" value="2020">
+                    </div>
+                </div>
+                
+                <div class="modalButtons">
+                    <button class="btnCancel" id="btnCancelFilter">Cancelar</button>
+                    <button class="btnApply" id="btnApplyFilter">Aplicar Filtros</button>
+                </div>
+            </div>
+        </div>
+
         <script src="script/util.js"></script>
         <script src="script/data.js"></script>
+        <script src="script/accessibility.js"></script>
+        <script src="script/filterExport.js"></script>
         <script src="script/index.js"></script>
     </body>
 </html>

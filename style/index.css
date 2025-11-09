@@ -86,20 +86,96 @@ header nav ul li a {
     padding: 0;
     margin: 0;
     cursor: pointer;
+    transition: transform 0.2s;
 }
 
+.btnInvisible:hover {
+    transform: scale(1.1);
+}
+
+/* Seção de controles do gráfico */
+.chartControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-right: 20px;
+}
+
+.chartControls .chartTitle {
+    flex: 1;
+}
+
+.chartTitle {
+    font-size: 18px;
+    color: #333;
+    font-family: "Mako", sans-serif;
+}
+
+.controlButtons {
+    display: flex;
+    gap: 15px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.btnControl {
+    padding: 10px 24px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    font-family: "Mako", sans-serif;
+    font-weight: 500;
+    color: #333;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.btnControl:hover {
+    background-color: #f8f9fa;
+    border-color: #aaa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+.btnControl svg {
+    width: 18px;
+    height: 18px;
+}
+
+#btnExport {
+    background-color: #1e3a5f;
+    color: white;
+    border-color: #1e3a5f;
+}
+
+#btnExport:hover {
+    background-color: #152d4a;
+    border-color: #152d4a;
+}
+
+#btnExport svg {
+    stroke: white;
+}
+
+/* Cards de navegação */
 .navCharts {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .cardChart {
     width: 155px;
     height: 155px;
-    border: solid #fff 2px;
+    border: solid #e0e0e0 2px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -107,16 +183,23 @@ header nav ul li a {
     flex-direction: column;
     outline: none;
     background-color: #fff;
-    box-shadow: 2px 4px 5px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 2px 4px 5px 1px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    transition: all 0.3s;
 
     font-family: "Mako", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 
+.cardChart:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 6px 8px 2px rgba(0, 0, 0, 0.15);
+}
+
 .cardChart.active {
-    border: solid rgba(10, 124, 255, 1) 2px;
+    border: solid #0A7CFF 2px;
+    background-color: #f0f7ff;
 }
 
 .cardChart .cardChartTitle {
@@ -135,4 +218,205 @@ header nav ul li a {
 .cardChart .cardChartIcon {
     margin-top: 10px;
     width: 60px;
+}
+
+/* Canvas do gráfico */
+#bricsChart {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal de Filtros */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modalContent {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modalContent h2 {
+    margin-bottom: 20px;
+    font-family: "Mako", sans-serif;
+}
+
+.filterGroup {
+    margin-bottom: 20px;
+}
+
+.filterGroup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-family: "Mako", sans-serif;
+}
+
+.filterGroup input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.filterGroup .checkboxLabel {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.yearInputs {
+    display: flex;
+    gap: 15px;
+}
+
+.yearInputs input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    font-family: "Mako", sans-serif;
+}
+
+.modalButtons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+
+.modalButtons button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: "Mako", sans-serif;
+    font-size: 14px;
+}
+
+.btnCancel {
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+.btnCancel:hover {
+    background-color: #f5f5f5;
+}
+
+.btnApply {
+    border: none;
+    background-color: #0A7CFF;
+    color: white;
+}
+
+.btnApply:hover {
+    background-color: #0862cc;
+}
+
+/* Acessibilidade - Alto Contraste */
+body.high-contrast {
+    background-color: #000;
+    color: #fff;
+}
+
+body.high-contrast header {
+    background-color: #000;
+    border-bottom: 2px solid #fff;
+}
+
+body.high-contrast .cardChart {
+    background-color: #000;
+    border-color: #fff;
+    color: #fff;
+    box-shadow: none;
+}
+
+body.high-contrast .cardChart.active {
+    background-color: #222;
+    border-color: #fff;
+}
+
+body.high-contrast .cardChartDescricao {
+    color: #ccc !important;
+}
+
+body.high-contrast #bricsChart {
+    background-color: #000;
+    border: 2px solid #fff;
+}
+
+body.high-contrast .chartTitle {
+    color: #fff;
+}
+
+body.high-contrast .btnControl {
+    background-color: #000;
+    border-color: #fff;
+    color: #fff;
+}
+
+body.high-contrast .modalContent {
+    background-color: #000;
+    border: 2px solid #fff;
+    color: #fff;
+}
+
+body.high-contrast .modalContent input {
+    background-color: #222;
+    border-color: #fff;
+    color: #fff;
+}
+
+/* Acessibilidade - Zoom */
+body.zoom-1 {
+    font-size: 110%;
+}
+
+body.zoom-2 {
+    font-size: 120%;
+}
+
+body.zoom-3 {
+    font-size: 130%;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 15px;
+    }
+
+    .chartControls {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .navCharts {
+        flex-wrap: wrap;
+    }
+
+    .cardChart {
+        width: 130px;
+        height: 130px;
+    }
 }
