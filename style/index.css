@@ -175,6 +175,7 @@ header nav ul li a {
     align-items: center;
     gap: 30px;
     margin-bottom: 40px;
+    margin-top: 50px;
 }
 
 .cardChart {
