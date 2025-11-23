@@ -189,23 +189,93 @@ function exportAsJSON() {
 }
 
 function exportAsImage() {
-    if (!globalChart) {
+    const histContainer = document.getElementById('histogramContainer');
+    
+    if (histContainer && histContainer.style.display !== 'none') {
+        exportMultipleHistograms();
+    } else if (globalChart) {
+        const canvas = document.getElementById('bricsChart');
+        
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        
+        tempCtx.fillStyle = '#FFFFFF';
+        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+        
+        tempCtx.drawImage(canvas, 0, 0);
+        
+        const url = tempCanvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = 'grafico_investimentos_pd_brics.png';
+        link.href = url;
+        link.click();
+        
+        console.log("Gráfico exportado como PNG");
+        
+        if (speechActive) {
+            speak("Gráfico exportado como imagem PNG");
+        }
+    } else {
         alert("Nenhum gráfico disponível para exportar!");
+    }
+}
+
+function exportMultipleHistograms() {
+    const histContainer = document.getElementById('histogramContainer');
+    if (!histContainer) {
+        alert("Nenhum histograma disponível para exportar!");
         return;
     }
     
-    const canvas = document.getElementById('bricsChart');
-    const url = canvas.toDataURL('image/png');
+    const tempCanvas = document.createElement('canvas');
+    const ctx = tempCanvas.getContext('2d');
     
+    const canvases = histContainer.querySelectorAll('canvas');
+    
+    if (canvases.length === 0) {
+        alert("Nenhum gráfico encontrado!");
+        return;
+    }
+    
+    const cols = 3;
+    const rows = Math.ceil(canvases.length / cols);
+    const canvasWidth = canvases[0].width;
+    const canvasHeight = canvases[0].height;
+    const padding = 20;
+    
+    tempCanvas.width = (canvasWidth * cols) + (padding * (cols + 1));
+    tempCanvas.height = (canvasHeight * rows) + (padding * (rows + 1));
+    
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+    
+    ctx.fillStyle = '#000000';
+    ctx.font = 'bold 24px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Distribuição dos Investimentos em P&D por País (2003-2020)', 
+                 tempCanvas.width / 2, 40);
+    
+    canvases.forEach((canvas, index) => {
+        const col = index % cols;
+        const row = Math.floor(index / cols);
+        const x = padding + (col * (canvasWidth + padding));
+        const y = 60 + padding + (row * (canvasHeight + padding));
+        
+        ctx.drawImage(canvas, x, y, canvasWidth, canvasHeight);
+    });
+    
+    const url = tempCanvas.toDataURL('image/png');
     const link = document.createElement('a');
-    link.download = 'grafico_investimentos_pd_brics.png';
+    link.download = 'histogramas_investimentos_pd_brics.png';
     link.href = url;
     link.click();
     
-    console.log("Gráfico exportado como PNG");
+    console.log("Histogramas exportados como PNG");
     
     if (speechActive) {
-        speak("Gráfico exportado como imagem PNG");
+        speak("Histogramas exportados como imagem PNG");
     }
 }
 
